@@ -1,0 +1,63 @@
+{{- if .Values.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "planeon-usage-ledger.name" . }}
+  labels:
+    {{- include "planeon-usage-ledger.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "planeon-usage-ledger.name" . }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "planeon-usage-ledger.name" . }}
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: usage-ledger
+          image: "{{ .Values.image.repository }}@{{ .Values.image.digest }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
+          ports:
+            - {name: http, containerPort: {{ .Values.service.port }}, protocol: TCP}
+          env:
+            - name: PLANEON_OIDC_REGISTRY_FILE
+              value: /authority/oidc/registry.json
+            - name: PLANEON_USAGE_CONFIG_FILE
+              value: /authority/usage/config.json
+            - name: PLANEON_OTEL_COLLECTOR_CONTRACT_FILE
+              value: /authority/collector/module.json
+            - name: PLANEON_READINESS_ORGANIZATION_ID
+              value: {{ .Values.readinessOrganizationId | quote }}
+            - name: PLANEON_DATABASE_DSN_FILE
+              value: /authority/database/dsn
+          volumeMounts:
+            - {name: oidc-registry, mountPath: /authority/oidc, readOnly: true}
+            - {name: database, mountPath: /authority/database, readOnly: true}
+            - {name: usage-config, mountPath: /authority/usage, readOnly: true}
+            - {name: collector-contract, mountPath: /authority/collector, readOnly: true}
+            - {name: runtime, mountPath: /tmp}
+          livenessProbe: {httpGet: {path: /health/live, port: http}, initialDelaySeconds: 5, periodSeconds: 10}
+          readinessProbe: {httpGet: {path: /health/ready, port: http}, initialDelaySeconds: 5, periodSeconds: 10}
+          resources: {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: oidc-registry
+          secret: {secretName: {{ .Values.existingSecrets.oidcRegistry }}}
+        - name: database
+          secret: {secretName: {{ .Values.existingSecrets.database }}}
+        - name: usage-config
+          configMap: {name: {{ .Values.existingConfigMaps.usageConfig }}}
+        - name: collector-contract
+          configMap: {name: {{ .Values.existingConfigMaps.collectorContract }}}
+        - name: runtime
+          emptyDir: {sizeLimit: 16Mi}
+{{- end }}

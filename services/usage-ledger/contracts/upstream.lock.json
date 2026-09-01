@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "harness.planeon.ai/upstream-lock/v1alpha1",
+  "contracts": {
+    "repository": "mas-harness-contracts",
+    "commit": "2146278a95344cd2a8e22596b2f315b46edffc88",
+    "releaseManifestSha256": "c5dd4c39d1c69d07f8d8de3d1a09584bb906172fee2d5ac20ad25ff344b0db79",
+    "executionBudgetSha256": "3d605bcdf1180c9a2c9ab0c56dd3da2fe821c66c7cf33ba3fb576dfb98c5c7d7",
+    "runtimeCommonSha256": "f5cbcee26f9dbd5250499358f26db403ce409d87e4fd625deccbca3f717d6ead",
+    "budgetConsumptionSha256": "98b72f3283388c8533069b05ca272c9d0e17f8709167837fa643a07b74b2d2c2",
+    "validBudgetConsumptionVectorSha256": "fea48682bee15b6a42e672234975bf6285a3b8c929237236b80b8f535c9d3a7b",
+    "harnessCloudEventSha256": "f0be09712101b61980e7752ae4a394bd09fa21640df4cbeeec4764f1e6004d0f"
+  },
+  "sdkTelemetry": {
+    "repository": "mas-harness-sdks",
+    "commit": "92a8ebf8e705eb2bf7a4e5be89edc5e8aa062c08",
+    "contextSha256": "24cf52e5f9250674eb0348c5f95cc10e8c59d7b346727874003dc45982116a54",
+    "attributesSha256": "9ca5a49aa79e599ff3da222566dc04ece67fdfd33c534732343d082c9fa87e4f",
+    "decoratorsSha256": "0d18bea2878b2f1e3153f7d084e6a870bf1a35197709a5cb7f9164acc2c20dc4",
+    "goldenSpanVectorsSha256": "e6b6a5546566eb55739f2fbbba0c1c239312f26f6c0a62f44c79b850fe57714c",
+    "admittedWheelSha256": "9b85d01b7079fe27c189d70b7fba46614c3df647d6f44e9270fe4683d7337fa4"
+  }
+}

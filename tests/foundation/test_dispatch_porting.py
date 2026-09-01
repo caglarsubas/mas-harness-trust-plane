@@ -28,17 +28,19 @@ class DispatchPortingTests(unittest.TestCase):
         rules = load_rules(ROOT / "ci/targets")
         self.assertEqual(
             {rule.name for rule in rules},
-            {"help", "prefetch", "policy-vectors", "guardrail-vectors", "streaming-failure-matrix", "security", "zero-bill"},
+            {"help", "prefetch", "policy-vectors", "guardrail-vectors", "streaming-failure-matrix", "usage-vectors", "observability-smoke", "security", "zero-bill"},
         )
         owners = {
             name: [rule.packet_id for rule in rules if rule.name == name]
             for name in {rule.name for rule in rules}
         }
         self.assertEqual(owners["prefetch"], ["TRUST-001", "TRUST-002"])
-        self.assertEqual(owners["security"], ["TRUST-001", "TRUST-002"])
-        self.assertEqual(owners["zero-bill"], ["TRUST-001", "TRUST-002"])
+        self.assertEqual(owners["security"], ["TRUST-001", "TRUST-002", "TRUST-OBS-001"])
+        self.assertEqual(owners["zero-bill"], ["TRUST-001", "TRUST-002", "TRUST-OBS-001"])
         self.assertEqual(owners["guardrail-vectors"], ["TRUST-002"])
         self.assertEqual(owners["streaming-failure-matrix"], ["TRUST-002"])
+        self.assertEqual(owners["usage-vectors"], ["TRUST-OBS-001"])
+        self.assertEqual(owners["observability-smoke"], ["TRUST-OBS-001"])
         with self.assertRaisesRegex(TargetDescriptorError, "zero applicable handlers"):
             dispatch("missing", {}, ROOT / "ci/targets")
 

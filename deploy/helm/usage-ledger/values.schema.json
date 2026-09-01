@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["enabled", "replicaCount", "image", "existingSecrets", "existingConfigMaps", "readinessOrganizationId", "service", "resources", "networkPolicy"],
+  "properties": {
+    "enabled": {"type": "boolean"},
+    "replicaCount": {"type": "integer", "minimum": 1, "maximum": 5},
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "digest", "pullPolicy"],
+      "properties": {
+        "repository": {"type": "string", "maxLength": 255},
+        "digest": {"type": "string", "maxLength": 71},
+        "pullPolicy": {"enum": ["IfNotPresent", "Never"]}
+      }
+    },
+    "existingSecrets": {"$ref": "#/$defs/references"},
+    "existingConfigMaps": {"$ref": "#/$defs/configReferences"},
+    "readinessOrganizationId": {"type": "string", "maxLength": 128},
+    "service": {"type": "object", "additionalProperties": false, "required": ["port"], "properties": {"port": {"type": "integer", "minimum": 1024, "maximum": 65535}}},
+    "resources": {"type": "object", "additionalProperties": false, "required": ["requests", "limits"], "properties": {"requests": {"$ref": "#/$defs/resources"}, "limits": {"$ref": "#/$defs/resources"}}},
+    "networkPolicy": {"$ref": "#/$defs/networkPolicy"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"enabled": {"const": true}}, "required": ["enabled"]},
+      "then": {
+        "properties": {
+          "image": {"properties": {"repository": {"pattern": "^[a-z0-9][a-z0-9._/-]+$"}, "digest": {"pattern": "^sha256:[a-f0-9]{64}$"}}},
+          "readinessOrganizationId": {"pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$", "minLength": 3},
+          "existingSecrets": {"properties": {"oidcRegistry": {"$ref": "#/$defs/name"}, "database": {"$ref": "#/$defs/name"}}},
+          "existingConfigMaps": {"properties": {"usageConfig": {"$ref": "#/$defs/name"}, "collectorContract": {"$ref": "#/$defs/name"}}}
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "name": {"type": "string", "pattern": "^[a-z0-9](?:[-a-z0-9]*[a-z0-9])?$", "minLength": 1, "maxLength": 63},
+    "labels": {"type": "object", "maxProperties": 16, "propertyNames": {"pattern": "^(?:[a-z0-9](?:[-a-z0-9_.]*[a-z0-9])?)(?:/[a-z0-9](?:[-a-z0-9_.]*[a-z0-9])?)?$"}, "additionalProperties": {"type": "string", "minLength": 1, "maxLength": 63}},
+    "references": {"type": "object", "additionalProperties": false, "required": ["oidcRegistry", "database"], "properties": {"oidcRegistry": {"type": "string", "maxLength": 63}, "database": {"type": "string", "maxLength": 63}}},
+    "configReferences": {"type": "object", "additionalProperties": false, "required": ["usageConfig", "collectorContract"], "properties": {"usageConfig": {"type": "string", "maxLength": 63}, "collectorContract": {"type": "string", "maxLength": 63}}},
+    "resources": {"type": "object", "additionalProperties": false, "required": ["cpu", "memory"], "properties": {"cpu": {"type": "string", "pattern": "^[1-9][0-9]*m?$"}, "memory": {"type": "string", "pattern": "^[1-9][0-9]*(?:Ki|Mi|Gi)$"}}},
+    "networkPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled", "ingressNamespaceLabels", "policyNamespaceLabels", "policyPodLabels", "policyPort", "databaseNamespaceLabels", "databasePodLabels", "databasePort", "collectorEnabled", "collectorNamespaceLabels", "collectorPodLabels", "collectorPort"],
+      "properties": {
+        "enabled": {"const": true},
+        "ingressNamespaceLabels": {"$ref": "#/$defs/labels"},
+        "policyNamespaceLabels": {"$ref": "#/$defs/labels"},
+        "policyPodLabels": {"$ref": "#/$defs/labels"},
+        "policyPort": {"type": "integer", "minimum": 1024, "maximum": 65535},
+        "databaseNamespaceLabels": {"$ref": "#/$defs/labels"},
+        "databasePodLabels": {"$ref": "#/$defs/labels"},
+        "databasePort": {"type": "integer", "minimum": 1024, "maximum": 65535},
+        "collectorEnabled": {"type": "boolean"},
+        "collectorNamespaceLabels": {"$ref": "#/$defs/labels"},
+        "collectorPodLabels": {"$ref": "#/$defs/labels"},
+        "collectorPort": {"type": "integer", "minimum": 1024, "maximum": 65535}
+      }
+    }
+  }
+}

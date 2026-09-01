@@ -1,0 +1,11 @@
+{{- if .Values.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "planeon-usage-ledger.name" . }}
+spec:
+  selector:
+    app.kubernetes.io/name: {{ include "planeon-usage-ledger.name" . }}
+  ports:
+    - {name: http, port: {{ .Values.service.port }}, targetPort: http, protocol: TCP}
+{{- end }}

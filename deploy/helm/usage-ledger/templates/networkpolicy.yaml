@@ -1,0 +1,41 @@
+{{- if and .Values.enabled .Values.networkPolicy.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "planeon-usage-ledger.name" . }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "planeon-usage-ledger.name" . }}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels: {{- toYaml .Values.networkPolicy.ingressNamespaceLabels | nindent 14 }}
+      ports:
+        - {protocol: TCP, port: {{ .Values.service.port }}}
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels: {{- toYaml .Values.networkPolicy.policyNamespaceLabels | nindent 14 }}
+          podSelector:
+            matchLabels: {{- toYaml .Values.networkPolicy.policyPodLabels | nindent 14 }}
+      ports:
+        - {protocol: TCP, port: {{ .Values.networkPolicy.policyPort }}}
+    - to:
+        - namespaceSelector:
+            matchLabels: {{- toYaml .Values.networkPolicy.databaseNamespaceLabels | nindent 14 }}
+          podSelector:
+            matchLabels: {{- toYaml .Values.networkPolicy.databasePodLabels | nindent 14 }}
+      ports:
+        - {protocol: TCP, port: {{ .Values.networkPolicy.databasePort }}}
+    {{- if .Values.networkPolicy.collectorEnabled }}
+    - to:
+        - namespaceSelector:
+            matchLabels: {{- toYaml .Values.networkPolicy.collectorNamespaceLabels | nindent 14 }}
+          podSelector:
+            matchLabels: {{- toYaml .Values.networkPolicy.collectorPodLabels | nindent 14 }}
+      ports:
+        - {protocol: TCP, port: {{ .Values.networkPolicy.collectorPort }}}
+    {{- end }}
+{{- end }}

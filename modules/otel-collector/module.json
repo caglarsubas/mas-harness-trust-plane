@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "harness.planeon.ai/otel-collector-module/v1alpha1",
+  "moduleId": "module.trust.observability.otel-collector",
+  "artifactState": "SOURCE_CONTRACT_ONLY",
+  "enabled": false,
+  "image": {"repository": "", "digest": "", "immutableDigestRequired": true},
+  "receivers": ["OTLP_GRPC", "OTLP_HTTP"],
+  "processors": ["MEMORY_LIMIT", "CONTENT_REDACTION", "CARDINALITY_LIMIT", "BATCH"],
+  "exporters": [
+    {"backendRef": "external.otel-backend", "signal": "METRICS"},
+    {"backendRef": "external.otel-backend", "signal": "TRACES"}
+  ],
+  "buffer": {"maximumRecords": 4096, "maximumBytes": 16777216, "maximumAgeSeconds": 300, "storage": "BOUNDED_LOCAL_WAL"},
+  "cardinality": {"maximumValuesPerKey": 128, "unknownAttributeDisposition": "DROP_WITH_COUNT"},
+  "contentPolicy": {"payloadCapture": "DISABLED", "sensitiveAttributeDisposition": "DROP_WITHOUT_VALUE_ECHO"},
+  "network": {"resolutionAuthority": "CATALOG_EXTERNAL_ID", "tenantPrivateOnly": true, "publicHostsAllowed": false, "urlLiteralsAllowed": false}
+}

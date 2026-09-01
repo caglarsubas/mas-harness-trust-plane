@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://harness.planeon.ai/schemas/usage-ledger/v1alpha1/usage-api.schema.json",
+  "title": "UsageLedgerPacketLocalAPI",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "maximumBodyBytes", "identitySource", "routes", "dimensions", "states"],
+  "properties": {
+    "schemaVersion": {"const": "harness.planeon.ai/usage-ledger/v1alpha1"},
+    "maximumBodyBytes": {"const": 65536},
+    "identitySource": {"const": "SERVER_DERIVED_OIDC"},
+    "routes": {
+      "const": [
+        "POST /observability/v1/usage:reserve",
+        "POST /observability/v1/usage:commit",
+        "POST /observability/v1/usage:release",
+        "GET /observability/v1/usage",
+        "GET /observability/v1/budgets",
+        "POST /observability/v1/budgets:evaluate",
+        "GET /observability/v1/slos",
+        "GET /observability/v1/health/dependencies"
+      ]
+    },
+    "dimensions": {"const": ["concurrentTasks", "taskSeconds", "retries", "toolCalls", "modelTokens", "modelCalls", "inputTokens", "outputTokens", "cpuSeconds", "gpuSeconds", "storageBytes"]},
+    "states": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["budgets", "reservations"],
+      "properties": {
+        "budgets": {"const": ["AVAILABLE", "WARNING", "EXHAUSTED", "SUSPENDED", "RESET_PENDING"]},
+        "reservations": {"const": ["RESERVED", "COMMITTED", "RELEASED", "EXPIRED"]}
+      }
+    }
+  }
+}
