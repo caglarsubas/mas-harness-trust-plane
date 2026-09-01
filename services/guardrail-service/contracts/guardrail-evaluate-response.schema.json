@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://harness.planeon.ai/schemas/trust/guardrail-evaluate-response.v1alpha1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "decisionId", "profileDigest", "contentDigest", "contentBytes", "evaluatedAt", "released", "profileId", "profileVersion", "stage", "outcome", "reasonCode", "detectorFindings", "failedDetectorIds", "degraded", "redactedContent", "evidenceRecord"],
+  "properties": {
+    "schemaVersion": {"const": "harness.planeon.ai/guardrail-evaluation/v1alpha1"},
+    "decisionId": {"type": "string", "pattern": "^decision\\.guardrail\\.[0-9a-f]{32}$"},
+    "profileDigest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "contentDigest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "contentBytes": {"type": "integer", "minimum": 0, "maximum": 1048576},
+    "evaluatedAt": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"},
+    "released": {"type": "boolean"},
+    "profileId": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$"},
+    "profileVersion": {"type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"},
+    "stage": {"enum": ["INPUT", "OUTPUT", "RUNTIME", "STREAMING"]},
+    "outcome": {"enum": ["ALLOW", "DENY", "REDACT", "QUARANTINE", "ERROR_FAIL_CLOSED", "ERROR_FAIL_OPEN"]},
+    "reasonCode": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]{0,63}$"},
+    "detectorFindings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["detectorId", "action", "reasonCode", "redactionRanges"],
+        "properties": {
+          "detectorId": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$"},
+          "action": {"enum": ["ALLOW", "DENY", "REDACT", "QUARANTINE"]},
+          "reasonCode": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]{0,63}$"},
+          "redactionRanges": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["start", "end"],
+              "properties": {"start": {"type": "integer", "minimum": 0}, "end": {"type": "integer", "minimum": 1}}
+            }
+          }
+        }
+      }
+    },
+    "failedDetectorIds": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$"}},
+    "degraded": {"type": "boolean"},
+    "redactedContent": {"oneOf": [{"type": "null"}, {"type": "string"}]},
+    "evidenceRecord": {"$ref": "evidence-record-intake.schema.json"}
+  },
+  "allOf": [
+    {"if": {"properties": {"outcome": {"enum": ["ALLOW", "REDACT"]}}, "required": ["outcome"]}, "then": {"properties": {"released": {"const": true}}}, "else": {"properties": {"released": {"const": false}}}}
+  ]
+}

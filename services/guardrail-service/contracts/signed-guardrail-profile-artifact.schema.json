@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://harness.planeon.ai/schemas/trust/signed-guardrail-profile-artifact.v1alpha1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "payload", "signature"],
+  "properties": {
+    "schemaVersion": {"const": "harness.planeon.ai/signed-guardrail-profile-artifact/v1alpha1"},
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["organizationId", "profile", "detectors", "profileDigest", "effectiveAt", "expiresAt", "supersedesProfileDigest"],
+      "properties": {
+        "organizationId": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$"},
+        "profile": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["apiVersion", "kind", "profileId", "version", "stage", "failMode", "maximumContentBytes", "detectorIds"],
+          "properties": {
+            "apiVersion": {"const": "harness.planeon.ai/v1alpha1"},
+            "kind": {"const": "GuardrailProfile"},
+            "profileId": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$"},
+            "version": {"type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"},
+            "stage": {"enum": ["INPUT", "OUTPUT", "RUNTIME", "STREAMING"]},
+            "failMode": {"enum": ["FAIL_CLOSED", "FAIL_OPEN"]},
+            "maximumContentBytes": {"type": "integer", "minimum": 1, "maximum": 1048576},
+            "detectorIds": {"type": "array", "minItems": 1, "maxItems": 64, "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$"}}
+          }
+        },
+        "detectors": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["detectorId", "implementation"],
+            "properties": {
+              "detectorId": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$"},
+              "implementation": {"enum": ["ALLOW_ALL_V1", "PROMPT_INJECTION_V1", "RUNTIME_QUARANTINE_V1", "SECRET_PATTERN_V1"]}
+            }
+          }
+        },
+        "profileDigest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "effectiveAt": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"},
+        "expiresAt": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"},
+        "supersedesProfileDigest": {"oneOf": [{"type": "null"}, {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}]}
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "keyId", "purpose", "signedMessageDigest", "value"],
+      "properties": {
+        "algorithm": {"const": "ED25519"},
+        "keyId": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$"},
+        "purpose": {"const": "GUARDRAIL_PROFILE"},
+        "signedMessageDigest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "value": {"type": "string", "pattern": "^[A-Za-z0-9_-]+$"}
+      }
+    }
+  }
+}

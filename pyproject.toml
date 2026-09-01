@@ -18,12 +18,12 @@ dependencies = [
 ]
 
 [tool.planeon]
-packet = "TRUST-001"
+packet = "TRUST-002"
 network-default = "disabled"
 policy-backend-default = "http://127.0.0.1:8181/v1/data/planeon/authz/decision"
 
 [tool.uv.sources]
-cffi = { path = "/opt/planeon/wheelhouse/trust-001/cffi-2.1.0-cp312-cp312-macosx_11_0_arm64.whl" }
-cryptography = { path = "/opt/planeon/wheelhouse/trust-001/cryptography-49.0.0-cp311-abi3-macosx_11_0_arm64.whl" }
-planeon-harness-sdk = { path = "/opt/planeon/wheelhouse/trust-001/planeon_harness_sdk-0.1.0-py3-none-any.whl" }
-pycparser = { path = "/opt/planeon/wheelhouse/trust-001/pycparser-3.0-py3-none-any.whl" }
+cffi = { path = "/opt/planeon/wheelhouse/trust-002/cffi-2.1.0-cp312-cp312-macosx_11_0_arm64.whl" }
+cryptography = { path = "/opt/planeon/wheelhouse/trust-002/cryptography-49.0.0-cp311-abi3-macosx_11_0_arm64.whl" }
+planeon-harness-sdk = { path = "/opt/planeon/wheelhouse/trust-002/planeon_harness_sdk-0.1.0-py3-none-any.whl" }
+pycparser = { path = "/opt/planeon/wheelhouse/trust-002/pycparser-3.0-py3-none-any.whl" }

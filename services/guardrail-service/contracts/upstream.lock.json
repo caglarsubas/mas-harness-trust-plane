@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "harness.planeon.ai/trust-guardrail-upstream-lock/v1alpha1",
+  "contracts": {
+    "repository": "mas-harness-contracts",
+    "commit": "2146278a95344cd2a8e22596b2f315b46edffc88",
+    "releaseManifestSha256": "c5dd4c39d1c69d07f8d8de3d1a09584bb906172fee2d5ac20ad25ff344b0db79",
+    "entries": {
+      "EvidenceRecord": "sha256:05ea50ee0ad9fb74414871c8c3fa572e9f1a22bbc667194f911834f26b829674",
+      "LifecycleCommonTypes": "sha256:08326b0089973097698776011a2d5c386cd6e0e6490642f1b9bfd942d6f7e409",
+      "TrustApi": "sha256:b16d5bd0a16186c4a6c98c5fce938f1b9e2c8fda562586f1466715de0b531271"
+    },
+    "guardrailRoutePresent": false,
+    "guardrailCloudEventPresent": false
+  },
+  "sdk": {
+    "repository": "mas-harness-sdks",
+    "commit": "a181302f81bf6a83760cfae3890551ace89f51e4",
+    "distribution": "planeon-harness-sdk",
+    "version": "0.1.0",
+    "wheelSha256": "9b85d01b7079fe27c189d70b7fba46614c3df647d6f44e9270fe4683d7337fa4"
+  }
+}

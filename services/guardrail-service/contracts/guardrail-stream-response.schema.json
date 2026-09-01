@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://harness.planeon.ai/schemas/trust/guardrail-stream-response.v1alpha1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "streamId", "profileId", "profileDigest", "state", "nextSequence"],
+  "properties": {
+    "schemaVersion": {"const": "harness.planeon.ai/guardrail-stream/v1alpha1"},
+    "streamId": {"type": "string", "pattern": "^stream\\.[0-9a-f]{32}$"},
+    "profileId": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$"},
+    "profileDigest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "state": {"enum": ["OPEN", "TERMINATED", "FINISHED", "EXPIRED"]},
+    "nextSequence": {"type": "integer", "minimum": 1},
+    "evaluation": {"$ref": "guardrail-evaluate-response.schema.json"}
+  }
+}
