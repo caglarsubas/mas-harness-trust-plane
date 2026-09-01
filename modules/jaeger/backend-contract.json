@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "harness.planeon.ai/external-otel-backend/v1alpha1",
+  "providerId": "external.otel-backend",
+  "backendKind": "TRACES",
+  "ownership": "TENANT_SUPPLIED_EXTERNAL",
+  "artifactState": "MISSING_PLANNED",
+  "builtByRepository": false,
+  "imageDigestRequired": true,
+  "tenantAttestationRequired": true,
+  "tenantIsolationRequired": true,
+  "retentionDays": 7,
+  "storageBytesLimit": 10737418240,
+  "ingestSignal": "TRACES",
+  "queryCatalog": ["harness.correlation.trace", "harness.operation.failure", "harness.operation.latency", "harness.operation.trace"],
+  "network": {"resolutionAuthority": "CATALOG_EXTERNAL_ID", "tenantPrivateOnly": true, "publicHostsAllowed": false, "urlLiteralsAllowed": false, "remoteWriteAllowed": false}
+}

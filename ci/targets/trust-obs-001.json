@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "harness.planeon.ai/make-target-descriptor/v1alpha1",
+  "packetId": "TRUST-OBS-001",
+  "targets": [
+    {"name": "observability-smoke", "acceptedVariables": {}, "argvTemplate": [["python3", "-m", "unittest", "tests.observability.test_telemetry", "tests.observability.test_modules"]]},
+    {"name": "security", "acceptedVariables": {}, "argvTemplate": [["python3", "-m", "unittest", "tests.observability.test_api", "tests.observability.test_migration_helm", "tests.observability.test_security"]]},
+    {"name": "usage-vectors", "acceptedVariables": {}, "argvTemplate": [["python3", "-m", "unittest", "tests.observability.test_contracts", "tests.observability.test_ledger", "tests.observability.test_retention"]]},
+    {"name": "zero-bill", "acceptedVariables": {}, "argvTemplate": [["python3", "ci/zero_bill_scan.py", "."]]}
+  ]
+}

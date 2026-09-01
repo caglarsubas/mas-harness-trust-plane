@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "harness.planeon.ai/usage-ledger-config/v1alpha1",
+  "budgets": [
+    {
+      "organizationId": "acme.one",
+      "budgetId": "budget.foundation",
+      "budgetDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "scopeType": "TENANT",
+      "scopeId": "acme.one",
+      "limits": {"concurrentTasks": 4, "taskSeconds": 300, "retries": 2, "toolCalls": 20, "modelTokens": 4096, "modelCalls": 8, "inputTokens": 2048, "outputTokens": 2048, "cpuSeconds": 600, "gpuSeconds": 0, "storageBytes": 1048576},
+      "enforcement": "HARD",
+      "windowEpoch": "2026-09-01T00:00:00Z",
+      "windowSeconds": 3600,
+      "warningThresholdBasisPoints": 8000,
+      "reservationTtlSeconds": 300,
+      "retentionWindows": 24,
+      "enabled": true
+    },
+    {
+      "organizationId": "acme.two",
+      "budgetId": "budget.advisory",
+      "budgetDigest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "scopeType": "PROFILE",
+      "scopeId": "profile.read-only",
+      "limits": {"concurrentTasks": 2, "taskSeconds": 120, "retries": 1, "toolCalls": 4, "modelTokens": 512, "modelCalls": 2, "inputTokens": 256, "outputTokens": 256, "cpuSeconds": 60, "gpuSeconds": 0, "storageBytes": 65536},
+      "enforcement": "ADVISORY",
+      "windowEpoch": "2026-09-01T00:00:00Z",
+      "windowSeconds": 3600,
+      "warningThresholdBasisPoints": 7500,
+      "reservationTtlSeconds": 120,
+      "retentionWindows": 12,
+      "enabled": true
+    }
+  ],
+  "buffer": {"maximumRecords": 128, "maximumBytes": 1048576, "maximumAgeSeconds": 300}
+}
