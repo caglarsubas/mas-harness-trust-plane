@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "harness.planeon.ai/trust-toolchain-lock/v1alpha1",
+  "packetId": "TRUST-001",
+  "python": "3.12.14",
+  "wheelhouse": "/opt/planeon/wheelhouse/trust-001",
+  "packages": [
+    {"distribution": "cffi", "version": "2.1.0", "wheel": "cffi-2.1.0-cp312-cp312-macosx_11_0_arm64.whl", "sha256": "a06422590f0bbfef6d501b71941c1429be31e86c0e1c51ffdffa13ffe8edd937"},
+    {"distribution": "cryptography", "version": "49.0.0", "wheel": "cryptography-49.0.0-cp311-abi3-macosx_11_0_arm64.whl", "sha256": "32b700c31d4729bcf273c8105b79af0d097c360539bb0cdabee9895967a1d1ed"},
+    {"distribution": "planeon-harness-sdk", "version": "0.1.0", "wheel": "planeon_harness_sdk-0.1.0-py3-none-any.whl", "sha256": "5a4fa30c64432622083d8a0eeb32cf3ae67fa9975795eb2f0b5a209bd76d56a5"},
+    {"distribution": "pycparser", "version": "3.0", "wheel": "pycparser-3.0-py3-none-any.whl", "sha256": "1db63b75352951790b3271362d125c817d07d89e7ff7c43d23c9b4ada80c1117"}
+  ],
+  "networkRequired": false
+}

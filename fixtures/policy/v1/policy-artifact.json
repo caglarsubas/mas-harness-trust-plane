@@ -1,0 +1,5 @@
+{
+  "payload": {"bundleVersion": 1, "dataDigest": "sha256:50208d78350a7a160dec59a82df1499b6ca7da33e54c5eb11c97e342118e68bb", "effectiveAt": "2026-01-01T00:00:00Z", "entrypoint": "planeon/authz/decision", "expiresAt": "2027-12-31T23:59:59Z", "modules": [{"path": "policy.rego", "sha256": "sha256:0919267039ba41e2f0f761090374a172565ab7a7be94dfb117769608e3da47cb"}], "organizationId": "acme.one", "policyDigest": "sha256:d04de0bd1e2156e5d2fc790fc36870d2ab97e14746a07eeb5b6d2c501bbed2c2", "policyId": "policy.foundation.v1", "supersedesPolicyDigest": null},
+  "schemaVersion": "harness.planeon.ai/signed-policy-artifact/v1alpha1",
+  "signature": {"algorithm": "ED25519", "keyId": "policy-2026", "purpose": "POLICY_BUNDLE", "signedMessageDigest": "sha256:815d03de21d90ee04593e81a032d64b63647945286cbc05edda8f9e254c7808a", "value": "J8sX8fQufuMEZxKCLWbFO7o7qI7eqKgphqJWJSfWUmCV4v7tYzn_swIdbh61I6iXf3d9kU9kmOElGhEmeYG2DA"}
+}

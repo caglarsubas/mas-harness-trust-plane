@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "policy-decision.name" . }}
+  labels: {app.kubernetes.io/name: policy-decision}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels: {app.kubernetes.io/name: policy-decision}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: policy-decision}
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: policy-decision
+          image: {{ include "policy-decision.image" . | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports: [{name: http, containerPort: 8080, protocol: TCP}]
+          env:
+            - {name: OIDC_REGISTRY_PATH, value: /var/run/planeon/trust/oidc-registry.json}
+            - {name: POLICY_ARTIFACT_PATH, value: /var/run/planeon/trust/policy-artifact.json}
+            - {name: POLICY_KEYSET_PATH, value: /var/run/planeon/trust/policy-keyset.json}
+            - name: DATABASE_DSN
+              valueFrom: {secretKeyRef: {name: {{ required "existingSecrets.database is required" .Values.existingSecrets.database | quote }}, key: dsn}}
+          resources: {{ toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
+          volumeMounts:
+            - {name: trust-material, mountPath: /var/run/planeon/trust, readOnly: true}
+            - {name: tmp, mountPath: /tmp}
+          livenessProbe: {httpGet: {path: /health/live, port: http}, initialDelaySeconds: 5, periodSeconds: 10}
+          readinessProbe: {httpGet: {path: /health/ready, port: http}, initialDelaySeconds: 5, periodSeconds: 5}
+{{- if .Values.opa.enabled }}
+        - name: opa
+          image: {{ include "policy-decision.opaImage" . | quote }}
+          args: ["run", "--server", "--addr=127.0.0.1:8181", "/var/run/planeon/trust"]
+          resources:
+            requests: {cpu: 50m, memory: 64Mi}
+            limits: {cpu: 250m, memory: 256Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
+          volumeMounts:
+            - {name: trust-material, mountPath: /var/run/planeon/trust, readOnly: true}
+            - {name: opa-tmp, mountPath: /tmp}
+{{- end }}
+      volumes:
+        - name: trust-material
+          secret: {secretName: {{ required "existingSecrets.trustMaterial is required" .Values.existingSecrets.trustMaterial | quote }}}
+        - {name: tmp, emptyDir: {sizeLimit: 32Mi}}
+{{- if .Values.opa.enabled }}
+        - {name: opa-tmp, emptyDir: {sizeLimit: 32Mi}}
+{{- end }}

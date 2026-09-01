@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://harness.planeon.ai/schemas/trust/v1alpha1/policy-decision-request.schema.json",
+  "title": "PolicyDecisionRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["action", "resource", "attributes", "mutation"],
+  "properties": {
+    "action": {"type": "string", "minLength": 1, "maxLength": 128},
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id"],
+      "properties": {
+        "kind": {"type": "string", "minLength": 1, "maxLength": 200},
+        "id": {"type": "string", "minLength": 1, "maxLength": 200}
+      }
+    },
+    "attributes": {"type": "object", "maxProperties": 128},
+    "mutation": {"type": "boolean"}
+  }
+}

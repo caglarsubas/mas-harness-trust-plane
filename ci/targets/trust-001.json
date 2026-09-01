@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "harness.planeon.ai/make-target-descriptor/v1alpha1",
+  "packetId": "TRUST-001",
+  "targets": [
+    {"name": "help", "acceptedVariables": {}, "argvTemplate": [["python3", "ci/handlers/help.py"]]},
+    {"name": "policy-vectors", "acceptedVariables": {}, "argvTemplate": [["python3", "-m", "unittest", "tests.foundation.test_identity", "tests.foundation.test_policy", "tests.foundation.test_decision"]]},
+    {"name": "prefetch", "acceptedVariables": {}, "argvTemplate": [["python3", "ci/handlers/prefetch.py"]]},
+    {"name": "security", "acceptedVariables": {}, "argvTemplate": [["python3", "-m", "unittest", "tests.foundation.test_client_asgi", "tests.foundation.test_migration_helm", "tests.foundation.test_dispatch_porting"]]},
+    {"name": "zero-bill", "acceptedVariables": {}, "argvTemplate": [["python3", "ci/zero_bill_scan.py", "."]]}
+  ]
+}

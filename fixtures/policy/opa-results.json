@@ -1,0 +1,4 @@
+{
+  "allow": {"result": {"allowed": true, "reasonCode": "ALLOW", "obligations": ["audit.standard"], "ttlSeconds": 10}},
+  "deny": {"result": {"allowed": false, "reasonCode": "ACTION_DENIED", "obligations": [], "ttlSeconds": 0}}
+}

@@ -1,0 +1,38 @@
+{
+  "issuers": [
+    {
+      "allowedAlgorithms": ["RS256"],
+      "audiences": ["planeon-trust"],
+      "clockSkewSeconds": 30,
+      "issuer": "https://issuer-rs.example.test",
+      "jwks": {"keys": [{"alg": "RS256", "e": "AQAB", "kid": "rs-2026", "kty": "RSA", "n": "jkk3rw8T-8xGX6RCRfiaVK4-VDbCmKNyqoS5UHnd8cRssY8n09WEi_OjfhHs2TwmyektqEAVj_xJ6v4RKldlCz2Hgqtx6bGpbMh0LDhBamYIk5VmE50kEYV8JaGpDJwt9XDat-aB1_cnht8NX4rspWInXkARJ1AuFSqwd3sBb8Rq8pgK8NgXUiiaiNK7yHJo65BJmU9eTRD-HAm1cT5PmAM-PvWJNRFdmCVNFTbY83Do4XvVTo0TEb67Ewav826XUV5Ti6QA19Tw-Zy-ymeOBvKlXxOwon_MXwrr-Mspc5NQ1BlEsb8giW-MevQ--C1OhYoO_MQdOrewpeNd_R4E_w", "use": "sig"}]},
+      "maximumTokenLifetimeSeconds": 600,
+      "organizationId": "acme.one",
+      "tenantClaim": "organization",
+      "tenantValue": "acme.one"
+    },
+    {
+      "allowedAlgorithms": ["ES256"],
+      "audiences": ["planeon-trust"],
+      "clockSkewSeconds": 30,
+      "issuer": "https://issuer-es.example.test",
+      "jwks": {"keys": [{"alg": "ES256", "crv": "P-256", "kid": "es-2026", "kty": "EC", "use": "sig", "x": "9uHWURkBcC6kS2t5WntvpigxRra99GaUlmKMkxTstRo", "y": "3NNwhlHGs_7s9YJbPmBFEIb8r6HSQG6B4bIIc-3WLds"}]},
+      "maximumTokenLifetimeSeconds": 600,
+      "organizationId": "acme.one",
+      "tenantClaim": "organization",
+      "tenantValue": "acme.one"
+    },
+    {
+      "allowedAlgorithms": ["EdDSA"],
+      "audiences": ["planeon-trust"],
+      "clockSkewSeconds": 30,
+      "issuer": "https://issuer-ed.example.test",
+      "jwks": {"keys": [{"alg": "EdDSA", "crv": "Ed25519", "kid": "ed-2026", "kty": "OKP", "use": "sig", "x": "hGWj-V_jTpXFg0MOtcbN6PZnDGZaxUqBTz3bBOSRds4"}]},
+      "maximumTokenLifetimeSeconds": 600,
+      "organizationId": "acme.one",
+      "tenantClaim": "organization",
+      "tenantValue": "acme.one"
+    }
+  ],
+  "schemaVersion": "harness.planeon.ai/oidc-tenant-registry/v1alpha1"
+}

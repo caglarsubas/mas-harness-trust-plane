@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["replicaCount", "image", "opa", "existingSecrets", "service", "resources", "networkPolicy"],
+  "properties": {
+    "replicaCount": {"type": "integer", "minimum": 1, "maximum": 5},
+    "image": {"$ref": "#/$defs/image"},
+    "opa": {
+      "type": "object", "additionalProperties": false, "required": ["enabled", "image"],
+      "properties": {"enabled": {"type": "boolean"}, "image": {"$ref": "#/$defs/optionalImage"}}
+    },
+    "existingSecrets": {
+      "type": "object", "additionalProperties": false, "required": ["trustMaterial", "database"],
+      "properties": {"trustMaterial": {"$ref": "#/$defs/name"}, "database": {"$ref": "#/$defs/name"}}
+    },
+    "service": {"type": "object", "additionalProperties": false, "required": ["port"], "properties": {"port": {"type": "integer", "minimum": 1024, "maximum": 65535}}},
+    "resources": {
+      "type": "object", "additionalProperties": false, "required": ["requests", "limits"],
+      "properties": {"requests": {"$ref": "#/$defs/resources"}, "limits": {"$ref": "#/$defs/resources"}}
+    },
+    "networkPolicy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["enabled", "ingressNamespaceLabels", "databaseNamespaceLabels", "databasePodLabels", "databasePort"],
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "ingressNamespaceLabels": {"$ref": "#/$defs/labels"},
+        "databaseNamespaceLabels": {"$ref": "#/$defs/labels"},
+        "databasePodLabels": {"$ref": "#/$defs/labels"},
+        "databasePort": {"type": "integer", "minimum": 1024, "maximum": 65535}
+      }
+    }
+  },
+  "$defs": {
+    "name": {"type": "string", "pattern": "^[a-z0-9](?:[-a-z0-9]*[a-z0-9])?$", "minLength": 1, "maxLength": 63},
+    "repository": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._/-]+$"},
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "image": {"type": "object", "additionalProperties": false, "required": ["repository", "digest", "pullPolicy"], "properties": {"repository": {"$ref": "#/$defs/repository"}, "digest": {"$ref": "#/$defs/digest"}, "pullPolicy": {"enum": ["IfNotPresent", "Never"]}}},
+    "optionalImage": {
+      "type": "object", "additionalProperties": false, "required": ["repository", "digest"],
+      "properties": {"repository": {"type": "string"}, "digest": {"type": "string"}},
+      "oneOf": [
+        {"properties": {"repository": {"const": ""}, "digest": {"const": ""}}},
+        {"properties": {"repository": {"$ref": "#/$defs/repository"}, "digest": {"$ref": "#/$defs/digest"}}}
+      ]
+    },
+    "labels": {
+      "type": "object", "maxProperties": 16,
+      "propertyNames": {"pattern": "^(?:[a-z0-9](?:[-a-z0-9_.]*[a-z0-9])?)(?:/[a-z0-9](?:[-a-z0-9_.]*[a-z0-9])?)?$"},
+      "additionalProperties": {"type": "string", "minLength": 1, "maxLength": 63}
+    },
+    "resources": {
+      "type": "object", "additionalProperties": false, "required": ["cpu", "memory"],
+      "properties": {
+        "cpu": {"type": "string", "pattern": "^[1-9][0-9]*m?$"},
+        "memory": {"type": "string", "pattern": "^[1-9][0-9]*(?:Ki|Mi|Gi)$"}
+      }
+    }
+  }
+}
