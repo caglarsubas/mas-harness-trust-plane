@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "harness.planeon.ai/make-target-descriptor/v1alpha1",
+  "packetId": "TRUST-002",
+  "targets": [
+    {"name": "guardrail-vectors", "acceptedVariables": {}, "argvTemplate": [["python3", "-m", "unittest", "tests.guardrails.test_profiles", "tests.guardrails.test_service", "tests.guardrails.test_evidence"]]},
+    {"name": "prefetch", "acceptedVariables": {}, "argvTemplate": [["python3", "ci/handlers/trust_002_prefetch.py"]]},
+    {"name": "security", "acceptedVariables": {}, "argvTemplate": [["python3", "-m", "unittest", "tests.guardrails.test_asgi", "tests.guardrails.test_migration_helm", "tests.guardrails.test_security"]]},
+    {"name": "streaming-failure-matrix", "acceptedVariables": {}, "argvTemplate": [["python3", "-m", "unittest", "tests.guardrails.test_streaming"]]},
+    {"name": "zero-bill", "acceptedVariables": {}, "argvTemplate": [["python3", "ci/zero_bill_scan.py", "."]]}
+  ]
+}

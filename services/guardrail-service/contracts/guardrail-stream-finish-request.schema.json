@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://harness.planeon.ai/schemas/trust/guardrail-stream-finish-request.v1alpha1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["sequence"],
+  "properties": {"sequence": {"type": "integer", "minimum": 1}}
+}

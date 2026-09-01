@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://harness.planeon.ai/schemas/trust/guardrail-error.v1alpha1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "allowed", "reasonCode"],
+  "properties": {
+    "schemaVersion": {"const": "harness.planeon.ai/guardrail-error/v1alpha1"},
+    "allowed": {"const": false},
+    "reasonCode": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]{0,63}$"}
+  }
+}

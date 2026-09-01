@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://harness.planeon.ai/schemas/trust/guardrail-evaluate-request.v1alpha1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["profileId", "content"],
+  "properties": {
+    "profileId": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$", "maxLength": 128},
+    "content": {"type": "string", "maxLength": 1048576}
+  }
+}

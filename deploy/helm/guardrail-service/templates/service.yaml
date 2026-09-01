@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: guardrail-service
+spec:
+  selector: {app.kubernetes.io/name: guardrail-service}
+  ports: [{name: http, port: {{ .Values.service.port }}, targetPort: http, protocol: TCP}]

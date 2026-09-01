@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://harness.planeon.ai/schemas/trust/guardrail-stream-push-request.v1alpha1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["sequence", "content"],
+  "properties": {
+    "sequence": {"type": "integer", "minimum": 1},
+    "content": {"type": "string", "minLength": 1, "maxLength": 1048576}
+  }
+}
