@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: policy-decision
+spec:
+  selector: {app.kubernetes.io/name: policy-decision}
+  ports: [{name: http, port: {{ .Values.service.port }}, targetPort: http, protocol: TCP}]

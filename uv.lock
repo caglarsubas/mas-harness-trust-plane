@@ -1,0 +1,77 @@
+version = 1
+revision = 3
+requires-python = ">=3.12"
+
+[[package]]
+name = "cffi"
+version = "2.1.0"
+source = { path = "/opt/planeon/wheelhouse/trust-001/cffi-2.1.0-cp312-cp312-macosx_11_0_arm64.whl" }
+dependencies = [
+    { name = "pycparser", marker = "implementation_name != 'PyPy'" },
+]
+wheels = [
+    { filename = "cffi-2.1.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:a06422590f0bbfef6d501b71941c1429be31e86c0e1c51ffdffa13ffe8edd937" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "pycparser", marker = "implementation_name != 'PyPy'" }]
+
+[[package]]
+name = "cryptography"
+version = "49.0.0"
+source = { path = "/opt/planeon/wheelhouse/trust-001/cryptography-49.0.0-cp311-abi3-macosx_11_0_arm64.whl" }
+dependencies = [
+    { name = "cffi", marker = "platform_python_implementation != 'PyPy'" },
+]
+wheels = [
+    { filename = "cryptography-49.0.0-cp311-abi3-macosx_11_0_arm64.whl", hash = "sha256:32b700c31d4729bcf273c8105b79af0d097c360539bb0cdabee9895967a1d1ed" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "bcrypt", marker = "extra == 'ssh'", specifier = ">=3.1.5" },
+    { name = "cffi", marker = "platform_python_implementation != 'PyPy'", specifier = ">=2.0.0" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'", specifier = ">=4.13.2" },
+]
+provides-extras = ["ssh"]
+
+[[package]]
+name = "planeon-harness-sdk"
+version = "0.1.0"
+source = { path = "/opt/planeon/wheelhouse/trust-001/planeon_harness_sdk-0.1.0-py3-none-any.whl" }
+dependencies = [
+    { name = "cryptography" },
+]
+wheels = [
+    { filename = "planeon_harness_sdk-0.1.0-py3-none-any.whl", hash = "sha256:5a4fa30c64432622083d8a0eeb32cf3ae67fa9975795eb2f0b5a209bd76d56a5" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "cryptography", specifier = "==49.0.0" }]
+
+[[package]]
+name = "planeon-harness-trust-plane"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "cffi" },
+    { name = "cryptography" },
+    { name = "planeon-harness-sdk" },
+    { name = "pycparser" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "cffi", path = "/opt/planeon/wheelhouse/trust-001/cffi-2.1.0-cp312-cp312-macosx_11_0_arm64.whl" },
+    { name = "cryptography", path = "/opt/planeon/wheelhouse/trust-001/cryptography-49.0.0-cp311-abi3-macosx_11_0_arm64.whl" },
+    { name = "planeon-harness-sdk", path = "/opt/planeon/wheelhouse/trust-001/planeon_harness_sdk-0.1.0-py3-none-any.whl" },
+    { name = "pycparser", path = "/opt/planeon/wheelhouse/trust-001/pycparser-3.0-py3-none-any.whl" },
+]
+
+[[package]]
+name = "pycparser"
+version = "3.0"
+source = { path = "/opt/planeon/wheelhouse/trust-001/pycparser-3.0-py3-none-any.whl" }
+wheels = [
+    { filename = "pycparser-3.0-py3-none-any.whl", hash = "sha256:1db63b75352951790b3271362d125c817d07d89e7ff7c43d23c9b4ada80c1117" },
+]

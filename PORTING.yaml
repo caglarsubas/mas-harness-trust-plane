@@ -1,0 +1,5 @@
+schemaVersion: harness.planeon.ai/porting-ledger/v1alpha1
+repository: mas-harness-trust-plane
+state: NO_AUTHORIZATION
+authorizations: []
+ports: []

@@ -1,0 +1,5 @@
+{
+  "keys": [{"algorithm": "ED25519", "keyId": "policy-2026", "notAfter": "2028-01-01T00:00:00Z", "notBefore": "2026-01-01T00:00:00Z", "publicKey": "Pj8yaHu6-YaFDS3qeOIj-1rPW2D5JI3a19qCT46iNbY", "purposes": ["POLICY_BUNDLE"], "state": "ACTIVE"}],
+  "organizationId": "acme.one",
+  "schemaVersion": "harness.planeon.ai/policy-public-key-set/v1alpha1"
+}

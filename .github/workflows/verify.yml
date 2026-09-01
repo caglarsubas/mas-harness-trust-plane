@@ -1,0 +1,23 @@
+name: offline-verify
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: [self-hosted, harness-engineering, ephemeral, credential-free]
+    timeout-minutes: 30
+    steps:
+      - name: Credential-free checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Signed hash-pinned offline acceptance
+        env:
+          HARNESS_TASK_PACKET: /etc/planeon/task-packets/TRUST-001.yaml
+        run: /opt/planeon/bin/harness-offline-launch

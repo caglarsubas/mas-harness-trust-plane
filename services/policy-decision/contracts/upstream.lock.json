@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "harness.planeon.ai/trust-upstream-lock/v1alpha1",
+  "contracts": {
+    "repository": "mas-harness-contracts",
+    "commit": "2146278a95344cd2a8e22596b2f315b46edffc88",
+    "releaseManifestSha256": "c5dd4c39d1c69d07f8d8de3d1a09584bb906172fee2d5ac20ad25ff344b0db79",
+    "entries": {
+      "PolicyBundle": "sha256:c0444183121d156d001d0b004975b14dd25df3a6065bd4ecfecd4c965a0fd13d",
+      "LifecycleCloudEvent": "sha256:f0be09712101b61980e7752ae4a394bd09fa21640df4cbeeec4764f1e6004d0f",
+      "LifecycleCommonTypes": "sha256:08326b0089973097698776011a2d5c386cd6e0e6490642f1b9bfd942d6f7e409",
+      "TrustApi": "sha256:b16d5bd0a16186c4a6c98c5fce938f1b9e2c8fda562586f1466715de0b531271"
+    }
+  },
+  "compatibility": {
+    "authority": "compatibility/data-harness-v1/mappings.json",
+    "rawSha256": "81cc6d9ed39099534b61e45830f95af6bb215854f43dc21c37dd8080055445a3"
+  },
+  "sdk": {
+    "repository": "mas-harness-sdks",
+    "commit": "a083d04fb2c0f32a1ce8373a6251e703226380c8",
+    "distribution": "planeon-harness-sdk",
+    "version": "0.1.0",
+    "wheelSha256": "5a4fa30c64432622083d8a0eeb32cf3ae67fa9975795eb2f0b5a209bd76d56a5"
+  }
+}
