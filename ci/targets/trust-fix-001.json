@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "harness.planeon.ai/make-target-descriptor/v1alpha1",
+  "packetId": "TRUST-FIX-001",
+  "targets": [
+    {"name": "authority-boundary", "acceptedVariables": {}, "argvTemplate": [["python3", "-m", "unittest", "tests.foundation.test_authority_markers"]]},
+    {"name": "security", "acceptedVariables": {}, "argvTemplate": [["python3", "-m", "unittest", "tests.foundation.test_authority_markers"]]}
+  ]
+}
