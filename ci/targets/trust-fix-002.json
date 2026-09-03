@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "harness.planeon.ai/make-target-descriptor/v1alpha1",
+  "packetId": "TRUST-FIX-002",
+  "targets": [
+    {
+      "name": "trust-fix-002-regression",
+      "acceptedVariables": {},
+      "argvTemplate": [["python3", "tests/bootstrap/test_static_contract.py"]]
+    }
+  ]
+}

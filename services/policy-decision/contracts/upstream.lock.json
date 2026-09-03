@@ -17,7 +17,7 @@
   },
   "sdk": {
     "repository": "mas-harness-sdks",
-    "commit": "a083d04fb2c0f32a1ce8373a6251e703226380c8",
+    "commit": "a083d0462012160a8ce5a4cc5b7b0fe077840200",
     "distribution": "planeon-harness-sdk",
     "version": "0.1.0",
     "wheelSha256": "5a4fa30c64432622083d8a0eeb32cf3ae67fa9975795eb2f0b5a209bd76d56a5"
