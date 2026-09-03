@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   verify:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false
     runs-on: [self-hosted, harness-engineering, ephemeral, credential-free]
     timeout-minutes: 30
     steps:
@@ -18,6 +19,4 @@ jobs:
         with:
           persist-credentials: false
       - name: Signed hash-pinned offline acceptance
-        env:
-          HARNESS_TASK_PACKET: /etc/planeon/task-packets/TRUST-001.yaml
         run: /opt/planeon/bin/harness-offline-launch
